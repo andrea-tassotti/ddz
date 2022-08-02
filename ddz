@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+#	Wrapper to dd command with compression 
+#
+#	@author Andrea Tassotti
+#
+
+for arg
+do
+	if [[ $arg =~ ^if= ]] ; then
+		src=$arg 
+	elif [[ $arg =~ ^of= ]] ; then
+		dst=$arg
+	else
+		args="$args $arg"
+	fi
+done
+
+dd if="${src##*if=}" $args | gzip -9 > "${dst##*of=}"
+
+
